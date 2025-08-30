@@ -1,103 +1,198 @@
+"use client";
+
 import Image from "next/image";
+import { motion } from "framer-motion";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { Baby, Heart, Home, Users } from "lucide-react";
 
-export default function Home() {
+export default function LandingPage() {
+  const galleryPhotos = [
+    {
+      title: "Esposa",
+      icon: Heart,
+      images: ["/assets/avos.jpg", "/assets/avos-2.jpg"],
+    },
+    {
+      title: "Filhos",
+      icon: Users,
+      images: [
+        "/assets/4.png",
+        "/assets/filhos.jpg",
+        "/assets/filha.jpg",
+        "/assets/filho.jpg",
+        "/assets/7.png",
+        "/assets/5.png",
+        "/assets/6.jpeg",
+      ],
+    },
+    {
+      title: "Netos",
+      icon: Baby,
+      images: [
+        "/assets/renan.jpg",
+        "/assets/tulio.jpg",
+        "/assets/joao-g.jpg",
+        "/assets/otavio.jpeg",
+        "/assets/netos.jpg",
+        "/assets/1.png",
+        "/assets/11.png",
+        "/assets/13.png",
+      ],
+    },
+    {
+      title: "Familiares",
+      icon: Home,
+      images: [
+        "/assets/8.png",
+        "/assets/9.png",
+        "/assets/2.png",
+        "/assets/3.png",
+        "/assets/10.png",
+        "/assets/12.png",
+        "/assets/familia.jpg",
+        "/assets/familia2.jpg",
+        "/assets/familia3.jpg",
+      ],
+    },
+  ];
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
+    <main className="flex flex-col items-center justify-center w-full min-h-screen bg-gradient-to-b from-white to-gray-100 text-gray-800">
+      <div className="relative w-full h-screen">
         <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
+          src="/assets/vo-banner.jpg"
+          alt="Banner"
+          fill
+          quality={100}
           priority
+          className="object-cover"
         />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/40 text-white text-center px-4">
+          <motion.h1
+            initial={{ opacity: 0, y: -30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-4xl md:text-6xl font-bold drop-shadow-lg"
+          >
+            Feliz Aniversário Professor
+            <br /> Ramiro Canedo de Carvalho
+          </motion.h1>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.3 }}
+            className="mt-4 text-lg md:text-2xl max-w-2xl drop-shadow"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            Celebrando seus 85 anos de histórias, conquistas e amor pela
+            família.
+          </motion.p>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+      </div>
+
+      <section className="w-full max-w-5xl py-10 px-4">
+        <h2 className="text-2xl font-bold mb-12 text-center">Homenagem</h2>
+        <p className="text-lg text-justify text-gray-600 leading-relaxed">
+          Hoje celebramos não apenas seus 85 anos de vida, mas também toda a
+          história, ensinamentos e amor que o senhor compartilhou com nossa
+          família. Cada momento vivido ao seu lado é uma inspiração e uma
+          lembrança preciosa. Que este dia seja repleto de alegria, saúde e
+          muito carinho. Feliz aniversário!
+        </p>
+      </section>
+
+      <section className="w-full max-w-5xl py-16 px-4">
+        <h2 className="text-2xl font-bold mb-12 text-center">Galeria</h2>
+
+        <div className="space-y-12">
+          {galleryPhotos.map((group, i) => (
+            <div key={i} className="flex flex-col justify-center">
+              <h3 className="flex items-center justify-center gap-2 text-xl font-semibold mb-6 text-center">
+                <group.icon className="size-5 text-blue-500" />
+                {group.title}
+              </h3>
+              {group.title === "Familiares" ? (
+                <div className="columns-1 md:columns-2 gap-4 space-y-4">
+                  {group.images.map((src, j) => (
+                    <motion.div
+                      key={j}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.6, delay: j * 0.1 }}
+                      className="overflow-hidden rounded-xl"
+                    >
+                      <Image
+                        src={src}
+                        alt={`${group.title} ${j + 1}`}
+                        width={1200}
+                        height={800}
+                        className="object-cover w-full h-auto"
+                      />
+                    </motion.div>
+                  ))}
+                </div>
+              ) : (
+                <div className="grid gap-4 grid-cols-[repeat(auto-fit,minmax(200px,1fr))]">
+                  {group.images.map((src, j) => (
+                    <motion.div
+                      key={j}
+                      initial={{ opacity: 0, y: 30 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.6, delay: j * 0.1 }}
+                      className="relative w-full rounded-xl overflow-hidden bg-gray-100"
+                    >
+                      <AspectRatio ratio={4 / 5}>
+                        <Image
+                          src={src}
+                          alt={`${group.title} ${j + 1}`}
+                          fill
+                          className="object-cover"
+                        />
+                      </AspectRatio>
+                    </motion.div>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="w-full max-w-5xl text-center py-20 px-4">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+          <h2 className="text-3xl font-bold mb-4 flex items-center justify-center gap-2">
+            Obrigado por ser o coração da nossa família
+            <Heart className="w-6 h-6 text-red-500 fill-red-500" />
+          </h2>
+          <p className="text-gray-600">
+            Com amor, de todos os filhos, netos e familiares.
+          </p>
+        </motion.div>
+      </section>
+      <section className="w-full max-w-4xl py-16 px-4">
+        <h2 className="text-2xl font-bold mb-8 text-center">
+          Nossa Homenagem em Vídeo
+        </h2>
+        {/* <AspectRatio
+          ratio={16 / 9}
+          className="overflow-hidden rounded-xl shadow-lg"
         >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
+          <iframe
+            src="https://www.youtube.com/embed/"
+            title="Vídeo de homenagem"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            className="w-full h-full"
           />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+        </AspectRatio> */}
+      </section>
+    </main>
   );
 }
+
