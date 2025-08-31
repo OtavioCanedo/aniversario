@@ -1,9 +1,17 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { Baby, Heart, Home, Users } from "lucide-react";
+import {
+  Baby,
+  Heart,
+  Home,
+  PauseCircle,
+  PlayCircle,
+  Users,
+} from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 
 export default function LandingPage() {
   const galleryPhotos = [
@@ -55,9 +63,69 @@ export default function LandingPage() {
       ],
     },
   ];
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [entered, setEntered] = useState(false);
+
+  useEffect(() => {
+    if (!entered) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [entered]);
+
+  useEffect(() => {
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+    window.scrollTo(0, 0);
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0;
+    }
+  }, []);
+
+  const toggleAudio = () => {
+    if (!audioRef.current) return;
+
+    if (audioRef.current.paused) {
+      audioRef.current.play();
+    } else {
+      audioRef.current.pause();
+    }
+  };
+
+  const startAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0;
+      audioRef.current.play();
+    }
+    setEntered(true);
+  };
+
+  const pauseAudio = () => {
+    audioRef.current?.pause();
+  };
 
   return (
     <main className="flex flex-col items-center justify-center w-full min-h-screen bg-gradient-to-b from-white to-gray-100 text-gray-800">
+      {!entered && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
+          <motion.button
+            onClick={startAudio}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6 }}
+            className="flex items-center px-8 py-4 text-lg font-bold text-white bg-blue-600 rounded-2xl shadow-lg hover:bg-blue-700"
+          >
+            <PlayCircle size={24} className="mr-2" /> Reproduzir
+          </motion.button>
+        </div>
+      )}
+      <audio ref={audioRef} src="/musica.mp3" loop />
       <div className="relative w-full h-screen">
         <Image
           src="/assets/vo-banner.jpg"
@@ -67,27 +135,38 @@ export default function LandingPage() {
           priority
           className="object-cover"
         />
-        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/40 text-white text-center px-4">
-          <motion.h1
-            initial={{ opacity: 0, y: -30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-4xl md:text-6xl font-bold drop-shadow-lg"
-          >
-            Feliz Aniversário Professor
-            <br /> Ramiro Canedo de Carvalho
-          </motion.h1>
+        <AnimatePresence>
+          {entered && (
+            <motion.div
+              key="conteudo"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.8 }}
+              className="absolute inset-0 flex flex-col items-center justify-center bg-black/40 text-white text-center px-4"
+            >
+              <motion.h1
+                initial={{ opacity: 0, y: -30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                className="text-4xl md:text-6xl font-bold drop-shadow-lg"
+              >
+                Feliz Aniversário Professor
+                <br /> Ramiro Canedo de Carvalho
+              </motion.h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.3 }}
-            className="mt-4 text-lg md:text-2xl max-w-2xl drop-shadow"
-          >
-            Celebrando seus 85 anos de histórias, conquistas e amor pela
-            família.
-          </motion.p>
-        </div>
+              <motion.p
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.3 }}
+                className="mt-4 text-lg md:text-2xl max-w-2xl drop-shadow"
+              >
+                Celebrando seus 85 anos de histórias, conquistas e amor pela
+                família.
+              </motion.p>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       <section className="w-full max-w-5xl py-10 px-4">
@@ -99,6 +178,22 @@ export default function LandingPage() {
           lembrança preciosa. Que este dia seja repleto de alegria, saúde e
           muito carinho. Feliz aniversário!
         </p>
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="relative bg-gray-100 max-w-2xl mx-auto mt-8 rounded-xl shadow-md"
+        >
+          <AspectRatio ratio={4 / 5}>
+            <Image
+              src="/assets/carta.jpg"
+              alt="Carta"
+              fill
+              className="object-cover rounded-xl"
+            />
+          </AspectRatio>
+        </motion.div>
       </section>
 
       <section className="w-full max-w-5xl py-16 px-4">
@@ -175,22 +270,31 @@ export default function LandingPage() {
           </p>
         </motion.div>
       </section>
+      {entered && (
+        <button
+          onClick={toggleAudio}
+          className="flex items-center gap-2 cursor-pointer text-blue-500"
+        >
+          <PauseCircle className="w-8 h-8" />
+          Pausar música
+        </button>
+      )}
       <section className="w-full max-w-4xl py-16 px-4">
         <h2 className="text-2xl font-bold mb-8 text-center">
           Nossa Homenagem em Vídeo
         </h2>
-        {/* <AspectRatio
+        <AspectRatio
           ratio={16 / 9}
           className="overflow-hidden rounded-xl shadow-lg"
         >
           <iframe
-            src="https://www.youtube.com/embed/"
+            src="https://www.youtube.com/embed/ggurU3ktZww"
             title="Vídeo de homenagem"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
             className="w-full h-full"
           />
-        </AspectRatio> */}
+        </AspectRatio>
       </section>
     </main>
   );
